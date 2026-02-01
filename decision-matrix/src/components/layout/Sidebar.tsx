@@ -4,7 +4,11 @@ import { useStore } from '@/store'
 import { cn } from '@/lib/utils'
 import { formatDate } from '@/lib/utils'
 
-export function Sidebar() {
+interface SidebarProps {
+  onNavigate?: () => void
+}
+
+export function Sidebar({ onNavigate }: SidebarProps) {
   const projects = useStore(state => state.projects)
   const currentProjectId = useStore(state => state.currentProjectId)
   const setCurrentProject = useStore(state => state.setCurrentProject)
@@ -14,7 +18,13 @@ export function Sidebar() {
     const name = prompt('Название проекта:')
     if (name) {
       createProject(name)
+      onNavigate?.()
     }
+  }
+
+  const handleSelectProject = (id: string) => {
+    setCurrentProject(id)
+    onNavigate?.()
   }
 
   return (
@@ -40,7 +50,7 @@ export function Sidebar() {
             {projects.map(project => (
               <li key={project.id}>
                 <button
-                  onClick={() => setCurrentProject(project.id)}
+                  onClick={() => handleSelectProject(project.id)}
                   className={cn(
                     'w-full text-left px-3 py-2 rounded-md transition-colors',
                     currentProjectId === project.id

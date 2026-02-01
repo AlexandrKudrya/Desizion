@@ -1,73 +1,142 @@
-# React + TypeScript + Vite
+# DecisionMatrix
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Универсальный инструмент для принятия решений на основе многокритериальной оценки альтернатив.
 
-Currently, two official plugins are available:
+## Описание
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Веб-приложение для взвешенной оценки альтернатив по множеству критериев. Помогает принимать обоснованные решения при выборе квартир, работы, подрядчиков, автомобилей и других вариантов.
 
-## React Compiler
+## Возможности
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **5 типов нормализации**: линейная, обратная, пороговая, экспоненциальная, категориальная
+- **Взвешенная оценка**: настраиваемые веса для каждого критерия
+- **Автоматический расчёт**: рейтинг обновляется в реальном времени
+- **Локальное хранение**: все данные в браузере, без регистрации
+- **Экспорт/импорт**: JSON для бэкапа и переноса
 
-## Expanding the ESLint configuration
+## Быстрый старт
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Требования
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js 18+
+- npm 9+
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Установка и запуск
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Клонируем репозиторий
+git clone https://github.com/AlexandrKudrya/Desizion.git
+cd Desizion/decision-matrix
+
+# Устанавливаем зависимости
+npm install
+
+# Запускаем dev-сервер
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Откройте в браузере: http://localhost:5173
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Сборка для продакшена
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Сборка
+npm run build
+
+# Предпросмотр билда
+npm run preview
 ```
+
+## Технологии
+
+| Категория | Технология |
+|-----------|------------|
+| Frontend | React 18 + TypeScript |
+| Сборка | Vite |
+| Стили | Tailwind CSS |
+| UI-компоненты | shadcn/ui (Radix UI) |
+| Стейт | Zustand |
+| Формы | React Hook Form + Zod |
+| Хранение | localStorage |
+
+## Структура проекта
+
+```
+decision-matrix/
+├── src/
+│   ├── components/     # React компоненты
+│   │   ├── ui/         # Базовые UI компоненты (shadcn)
+│   │   ├── layout/     # Layout (Header, Sidebar)
+│   │   ├── project/    # Работа с проектами
+│   │   ├── criteria/   # Критерии
+│   │   ├── alternatives/ # Альтернативы
+│   │   └── results/    # Результаты и рейтинг
+│   ├── lib/            # Утилиты и логика
+│   │   ├── normalization.ts  # Функции нормализации
+│   │   ├── calculations.ts   # Расчёт рейтингов
+│   │   ├── storage.ts        # Работа с localStorage
+│   │   └── validation.ts     # Zod схемы
+│   ├── store/          # Zustand store
+│   ├── types/          # TypeScript типы
+│   ├── pages/          # Страницы приложения
+│   └── App.tsx         # Главный компонент
+├── public/             # Статические файлы
+└── dist/               # Билд (генерируется)
+```
+
+## Как использовать
+
+### 1. Создайте проект
+Нажмите "Новый проект" и введите название (например, "Выбор квартиры")
+
+### 2. Добавьте критерии
+Перейдите во вкладку "Критерии" и добавьте критерии оценки:
+- **Цена** (пороговая нормализация, вес 30%)
+- **Площадь** (линейная, вес 25%)
+- **До метро** (обратная линейная, вес 20%)
+- **Состояние** (категориальная, вес 25%)
+
+### 3. Добавьте альтернативы
+Во вкладке "Альтернативы" добавьте варианты для сравнения и заполните значения по каждому критерию.
+
+### 4. Смотрите результаты
+Во вкладке "Результаты" увидите рейтинг с автоматическим расчётом и детальной разбивкой по критериям.
+
+## Типы нормализации
+
+| Тип | Описание | Пример |
+|-----|----------|--------|
+| **Линейная** | Больше = лучше | Площадь квартиры |
+| **Обратная** | Меньше = лучше | Время до метро |
+| **Пороговая** | С критической границей | Цена (до X - ок, выше - плохо) |
+| **Экспоненциальная** | Убывающая важность | Время в пути |
+| **Категориальная** | Фиксированные варианты | Состояние ремонта |
+
+## Скрипты
+
+```bash
+npm run dev      # Запуск dev-сервера
+npm run build    # Сборка для продакшена
+npm run preview  # Предпросмотр билда
+npm run lint     # Проверка ESLint
+```
+
+## Деплой
+
+### GitHub Pages
+
+Проект настроен для автоматического деплоя на GitHub Pages через GitHub Actions.
+
+После пуша в `main` приложение будет доступно по адресу:
+https://alexandrkudrya.github.io/Desizion/
+
+### Ручной деплой
+
+```bash
+npm run build
+# Загрузите содержимое папки dist/ на любой статический хостинг
+```
+
+## Лицензия
+
+MIT
