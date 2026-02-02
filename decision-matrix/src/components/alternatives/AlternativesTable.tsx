@@ -56,7 +56,7 @@ export function AlternativesTable({ projectId, alternatives, criteria }: Alterna
 
   if (criteria.length === 0) {
     return (
-      <div className="text-center py-8 text-gray-500 border-2 border-dashed rounded-lg">
+      <div className="text-center py-8 text-muted-foreground border-2 border-dashed border-border rounded-2xl">
         <p className="mb-2">Сначала добавьте критерии</p>
       </div>
     )
@@ -65,7 +65,7 @@ export function AlternativesTable({ projectId, alternatives, criteria }: Alterna
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold">Альтернативы</h3>
+        <h3 className="text-lg font-semibold text-foreground">Альтернативы</h3>
         <Button size="sm" onClick={() => { setEditingAlt(null); setDialogOpen(true) }}>
           <Plus className="h-4 w-4 mr-2" />
           Добавить
@@ -73,37 +73,37 @@ export function AlternativesTable({ projectId, alternatives, criteria }: Alterna
       </div>
 
       {alternatives.length === 0 ? (
-        <div className="text-center py-8 text-gray-500 border-2 border-dashed rounded-lg">
+        <div className="text-center py-8 text-muted-foreground border-2 border-dashed border-border rounded-2xl">
           <p className="mb-2">Нет альтернатив</p>
           <Button variant="link" onClick={() => setDialogOpen(true)}>
             Добавить первую альтернативу
           </Button>
         </div>
       ) : (
-        <div className="border rounded-lg overflow-x-auto">
+        <div className="border border-border rounded-2xl overflow-x-auto">
           <table className="w-full">
-            <thead className="bg-gray-50">
+            <thead className="bg-secondary/50">
               <tr>
-                <th className="text-left px-4 py-3 text-sm font-medium text-gray-600">Название</th>
+                <th className="text-left px-4 py-3 text-sm font-medium text-muted-foreground">Название</th>
                 {criteria.map(c => (
-                  <th key={c.id} className="text-center px-4 py-3 text-sm font-medium text-gray-600 min-w-[100px]">
+                  <th key={c.id} className="text-center px-4 py-3 text-sm font-medium text-muted-foreground min-w-[100px]">
                     {c.name}
                   </th>
                 ))}
-                <th className="text-right px-4 py-3 text-sm font-medium text-gray-600 w-24">Действия</th>
+                <th className="text-right px-4 py-3 text-sm font-medium text-muted-foreground w-24">Действия</th>
               </tr>
             </thead>
-            <tbody className="divide-y">
+            <tbody className="divide-y divide-border">
               {alternatives.map(alt => (
-                <tr key={alt.id} className="hover:bg-gray-50">
+                <tr key={alt.id} className="hover:bg-secondary/30 transition-colors">
                   <td className="px-4 py-3">
-                    <div className="font-medium">{alt.name}</div>
+                    <div className="font-medium text-foreground">{alt.name}</div>
                     {alt.description && (
-                      <div className="text-sm text-gray-500">{alt.description}</div>
+                      <div className="text-sm text-muted-foreground">{alt.description}</div>
                     )}
                   </td>
                   {criteria.map(c => (
-                    <td key={c.id} className="px-4 py-3 text-center">
+                    <td key={c.id} className="px-4 py-3 text-center text-foreground">
                       {formatValue(alt.values[c.id])}
                     </td>
                   ))}
@@ -119,7 +119,7 @@ export function AlternativesTable({ projectId, alternatives, criteria }: Alterna
                       </Button>
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-8 w-8 text-red-600">
+                          <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive">
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </AlertDialogTrigger>

@@ -1,9 +1,13 @@
-import { Plus, Upload } from 'lucide-react'
+import { Plus, Upload, Menu, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useStore } from '@/store'
 import { useRef } from 'react'
 
-export function Header() {
+interface HeaderProps {
+  onMenuClick?: () => void
+}
+
+export function Header({ onMenuClick }: HeaderProps) {
   const createProject = useStore(state => state.createProject)
   const importProject = useStore(state => state.importProject)
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -35,10 +39,33 @@ export function Header() {
   }
 
   return (
-    <header className="border-b bg-white sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-3 md:py-4 flex items-center justify-between">
-        <h1 className="text-xl md:text-2xl font-bold text-gray-900">DecisionMatrix</h1>
-        <div className="flex gap-2">
+    <header className="h-16 glass border-b border-border/50 sticky top-0 z-50">
+      <div className="h-full max-w-7xl mx-auto px-4 flex items-center justify-between">
+        {/* Left side */}
+        <div className="flex items-center gap-3">
+          {/* Mobile menu button */}
+          <Button
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            onClick={onMenuClick}
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
+
+          {/* Logo */}
+          <div className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-accent flex items-center justify-center">
+              <Sparkles className="h-4 w-4 text-primary-foreground" />
+            </div>
+            <h1 className="text-lg md:text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              DecisionMatrix
+            </h1>
+          </div>
+        </div>
+
+        {/* Right side */}
+        <div className="flex items-center gap-2">
           <input
             ref={fileInputRef}
             type="file"
@@ -47,15 +74,19 @@ export function Header() {
             className="hidden"
           />
           <Button
-            variant="outline"
+            variant="ghost"
             size="sm"
             onClick={() => fileInputRef.current?.click()}
-            className="px-2 md:px-3"
+            className="text-muted-foreground hover:text-foreground"
           >
             <Upload className="h-4 w-4 md:mr-2" />
             <span className="hidden md:inline">Импорт</span>
           </Button>
-          <Button size="sm" onClick={handleNewProject} className="px-2 md:px-3">
+          <Button
+            size="sm"
+            onClick={handleNewProject}
+            className="bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity"
+          >
             <Plus className="h-4 w-4 md:mr-2" />
             <span className="hidden md:inline">Новый проект</span>
           </Button>

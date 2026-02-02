@@ -1,9 +1,15 @@
 import { useState } from 'react'
 import type { ReactNode } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu } from 'lucide-react'
 import { Header } from './Header'
 import { Sidebar } from './Sidebar'
 import { Button } from '@/components/ui/button'
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet'
 
 interface LayoutProps {
   children: ReactNode
@@ -14,42 +20,45 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
-      <div className="flex flex-1 relative">
-        {/* Mobile sidebar toggle */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="fixed bottom-4 left-4 z-50 md:hidden shadow-lg bg-white border"
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-        >
-          {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </Button>
+      <Header onMenuClick={() => setSidebarOpen(true)} />
 
-        {/* Sidebar - hidden on mobile, shown on md+ */}
-        <div className={`
-          fixed inset-y-0 left-0 z-40 w-64 transform transition-transform duration-200 ease-in-out
-          md:relative md:translate-x-0 md:block
-          ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-        `}>
-          <div className="h-full pt-16 md:pt-0">
-            <Sidebar onNavigate={() => setSidebarOpen(false)} />
+      <div className="flex flex-1 relative">
+        {/* Mobile sidebar - Sheet drawer */}
+        <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
+          <SheetContent side="left" className="w-72 p-0 bg-card/95 backdrop-blur-xl">
+            <SheetHeader className="p-4 border-b border-border/50">
+              <SheetTitle className="text-primary glow-text-cyan">
+                Проекты
+              </SheetTitle>
+            </SheetHeader>
+            <div className="h-[calc(100%-60px)] overflow-auto">
+              <Sidebar onNavigate={() => setSidebarOpen(false)} />
+            </div>
+          </SheetContent>
+        </Sheet>
+
+        {/* Desktop sidebar */}
+        <div className="hidden md:block w-64 shrink-0">
+          <div className="fixed top-16 left-0 w-64 h-[calc(100vh-64px)] glass border-r border-border/50">
+            <Sidebar />
           </div>
         </div>
 
-        {/* Overlay for mobile */}
-        {sidebarOpen && (
-          <div
-            className="fixed inset-0 bg-black/50 z-30 md:hidden"
-            onClick={() => setSidebarOpen(false)}
-          />
-        )}
-
         {/* Main content */}
-        <main className="flex-1 p-4 md:p-6 bg-gray-100 overflow-auto">
+        <main className="flex-1 p-4 md:p-6 overflow-auto min-h-[calc(100vh-64px)]">
           {children}
         </main>
       </div>
+
+      {/* Mobile bottom action button */}
+      <Button
+        variant="default"
+        size="icon"
+        className="fixed bottom-6 right-6 z-50 md:hidden h-14 w-14 rounded-full shadow-2xl glow-cyan"
+        onClick={() => setSidebarOpen(true)}
+      >
+        <Menu className="h-6 w-6" />
+      </Button>
     </div>
   )
 }

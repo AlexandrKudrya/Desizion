@@ -64,15 +64,15 @@ export function CriteriaList({ projectId, criteria }: CriteriaListProps) {
     <div>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <h3 className="text-lg font-semibold">Критерии</h3>
+          <h3 className="text-lg font-semibold text-foreground">Критерии</h3>
           {criteria.length > 0 && (
             <div className="flex items-center gap-1">
               {isWeightValid ? (
-                <CheckCircle2 className="h-4 w-4 text-green-600" />
+                <CheckCircle2 className="h-4 w-4 text-emerald-400" />
               ) : (
-                <AlertCircle className="h-4 w-4 text-orange-500" />
+                <AlertCircle className="h-4 w-4 text-amber-400" />
               )}
-              <span className={isWeightValid ? 'text-green-600 text-sm' : 'text-orange-500 text-sm'}>
+              <span className={isWeightValid ? 'text-emerald-400 text-sm' : 'text-amber-400 text-sm'}>
                 {(totalWeight * 100).toFixed(0)}%
               </span>
             </div>
@@ -85,30 +85,30 @@ export function CriteriaList({ projectId, criteria }: CriteriaListProps) {
       </div>
 
       {criteria.length === 0 ? (
-        <div className="text-center py-8 text-gray-500 border-2 border-dashed rounded-lg">
+        <div className="text-center py-8 text-muted-foreground border-2 border-dashed border-border rounded-2xl">
           <p className="mb-2">Нет критериев</p>
           <Button variant="link" onClick={() => setDialogOpen(true)}>
             Добавить первый критерий
           </Button>
         </div>
       ) : (
-        <div className="border rounded-lg overflow-hidden">
+        <div className="border border-border rounded-2xl overflow-hidden">
           <table className="w-full">
-            <thead className="bg-gray-50">
+            <thead className="bg-secondary/50">
               <tr>
-                <th className="text-left px-4 py-3 text-sm font-medium text-gray-600">Название</th>
-                <th className="text-center px-4 py-3 text-sm font-medium text-gray-600 w-24">Вес</th>
-                <th className="text-center px-4 py-3 text-sm font-medium text-gray-600 w-32">Тип</th>
-                <th className="text-right px-4 py-3 text-sm font-medium text-gray-600 w-24">Действия</th>
+                <th className="text-left px-4 py-3 text-sm font-medium text-muted-foreground">Название</th>
+                <th className="text-center px-4 py-3 text-sm font-medium text-muted-foreground w-24">Вес</th>
+                <th className="text-center px-4 py-3 text-sm font-medium text-muted-foreground w-32">Тип</th>
+                <th className="text-right px-4 py-3 text-sm font-medium text-muted-foreground w-24">Действия</th>
               </tr>
             </thead>
-            <tbody className="divide-y">
+            <tbody className="divide-y divide-border">
               {criteria.map(criterion => (
-                <tr key={criterion.id} className="hover:bg-gray-50">
+                <tr key={criterion.id} className="hover:bg-secondary/30 transition-colors">
                   <td className="px-4 py-3">
-                    <div className="font-medium">{criterion.name}</div>
+                    <div className="font-medium text-foreground">{criterion.name}</div>
                     {criterion.description && (
-                      <div className="text-sm text-gray-500">{criterion.description}</div>
+                      <div className="text-sm text-muted-foreground">{criterion.description}</div>
                     )}
                   </td>
                   <td className="px-4 py-3 text-center">
@@ -129,7 +129,7 @@ export function CriteriaList({ projectId, criteria }: CriteriaListProps) {
                       </Button>
                       <AlertDialog>
                         <AlertDialogTrigger asChild>
-                          <Button variant="ghost" size="icon" className="h-8 w-8 text-red-600">
+                          <Button variant="ghost" size="icon" className="h-8 w-8 text-destructive hover:text-destructive">
                             <Trash2 className="h-4 w-4" />
                           </Button>
                         </AlertDialogTrigger>

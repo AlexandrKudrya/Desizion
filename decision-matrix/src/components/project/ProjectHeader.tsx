@@ -45,13 +45,20 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
   return (
     <div className="flex items-center justify-between mb-6">
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" onClick={() => setCurrentProject(null)}>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => setCurrentProject(null)}
+          className="hover:bg-primary/10 hover:text-primary"
+        >
           <ArrowLeft className="h-5 w-5" />
         </Button>
         <div>
-          <h2 className="text-2xl font-bold text-gray-900">{project.name}</h2>
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+            {project.name}
+          </h2>
           {project.description && (
-            <p className="text-gray-600">{project.description}</p>
+            <p className="text-muted-foreground">{project.description}</p>
           )}
         </div>
       </div>
@@ -59,14 +66,14 @@ export function ProjectHeader({ project }: ProjectHeaderProps) {
       <div className="flex gap-2">
         <Button variant="outline" size="sm" onClick={handleExport}>
           <Download className="h-4 w-4 mr-2" />
-          Экспорт
+          <span className="hidden sm:inline">Экспорт</span>
         </Button>
 
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant="destructive" size="sm">
-              <Trash2 className="h-4 w-4 mr-2" />
-              Удалить
+              <Trash2 className="h-4 w-4 sm:mr-2" />
+              <span className="hidden sm:inline">Удалить</span>
             </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
