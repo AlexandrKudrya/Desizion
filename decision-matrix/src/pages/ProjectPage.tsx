@@ -41,11 +41,11 @@ export function ProjectPage() {
           <TabsTrigger value="results">Результаты</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="criteria" className="bg-white p-6 rounded-lg shadow-sm">
+        <TabsContent value="criteria" className="glass p-6 rounded-2xl">
           <CriteriaList projectId={currentProjectId} criteria={project.criteria} />
         </TabsContent>
 
-        <TabsContent value="alternatives" className="bg-white p-6 rounded-lg shadow-sm">
+        <TabsContent value="alternatives" className="glass p-6 rounded-2xl">
           <AlternativesTable
             projectId={currentProjectId}
             alternatives={project.alternatives}
@@ -54,7 +54,7 @@ export function ProjectPage() {
         </TabsContent>
 
         <TabsContent value="results" className="space-y-6">
-          <div className="bg-white p-6 rounded-lg shadow-sm">
+          <div className="glass p-6 rounded-2xl">
             <RankingTable
               alternatives={project.alternatives}
               criteria={project.criteria}
@@ -62,9 +62,9 @@ export function ProjectPage() {
           </div>
 
           {ranked.length > 0 && project.criteria.length > 0 && (
-            <div className="bg-white p-6 rounded-lg shadow-sm">
+            <div className="glass p-6 rounded-2xl">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold">Детальный разбор</h3>
+                <h3 className="text-lg font-semibold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Детальный разбор</h3>
                 <Select
                   value={selectedAlt?.id || ''}
                   onValueChange={setSelectedAltId}

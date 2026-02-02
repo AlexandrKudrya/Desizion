@@ -1,4 +1,4 @@
-import { FolderOpen, Plus } from 'lucide-react'
+import { FolderOpen, Plus, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ProjectCard } from './ProjectCard'
 import { useStore } from '@/store'
@@ -18,14 +18,18 @@ export function ProjectList() {
 
   if (projects.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
-        <FolderOpen className="h-16 w-16 text-gray-400 mb-4" />
-        <h2 className="text-xl font-semibold text-gray-700 mb-2">Нет проектов</h2>
-        <p className="text-gray-500 mb-4">
-          Создайте свой первый проект для оценки альтернатив
+      <div className="flex flex-col items-center justify-center min-h-[400px] text-center glass rounded-3xl p-8">
+        <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center mb-6">
+          <FolderOpen className="h-10 w-10 text-primary" />
+        </div>
+        <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-2">
+          Нет проектов
+        </h2>
+        <p className="text-muted-foreground mb-6 max-w-md">
+          Создайте свой первый проект для оценки альтернатив по множеству критериев
         </p>
-        <Button onClick={handleNewProject}>
-          <Plus className="h-4 w-4 mr-2" />
+        <Button onClick={handleNewProject} className="glow-cyan">
+          <Sparkles className="h-4 w-4 mr-2" />
           Создать проект
         </Button>
       </div>
@@ -35,7 +39,9 @@ export function ProjectList() {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-semibold text-gray-800">Ваши проекты</h2>
+        <h2 className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          Ваши проекты
+        </h2>
         <Button onClick={handleNewProject}>
           <Plus className="h-4 w-4 mr-2" />
           Новый проект
